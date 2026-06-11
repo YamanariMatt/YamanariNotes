@@ -125,3 +125,7 @@ E-mail: matheusvictormy@gmail.com
 ## Licenca
 
 Este projeto esta licenciado sob a licenca MIT. Consulte o arquivo `LICENSE`.
+
+## Contribuicao
+
+Consulte o arquivo `CONTRIBUTING.md` para orientacoes de ambiente, validacao e padrao de commits.
