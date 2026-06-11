@@ -20,6 +20,8 @@
                 <MenuItem x:Name="AutoSaveMenuItem" Header="Salvamento _automatico" IsCheckable="True" Click="AutoSave_Click" />
                 <Separator />
                 <MenuItem x:Name="RecentFilesMenuItem" Header="Arquivos _recentes" />
+                <MenuItem Header="Copiar _caminho do arquivo" Click="CopyFilePath_Click" />
+                <MenuItem Header="Abrir pasta do ar_quivo" Click="OpenContainingFolder_Click" />
                 <Separator />
                 <MenuItem Header="Sai_r" Click="Exit_Click" />
             </MenuItem>

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -358,6 +359,47 @@ public partial class MainWindow : Window
         _printService.PrintText(EditorTextBox.Text, documentName, EditorTextBox.FontFamily, EditorTextBox.FontSize);
     }
 
+    private bool TryEnsureSavedFilePath()
+    {
+        if (!string.IsNullOrWhiteSpace(_currentFilePath) && File.Exists(_currentFilePath))
+        {
+            return true;
+        }
+
+        MessageBox.Show(
+            "Salve o arquivo primeiro para usar esta acao.",
+            "Arquivo sem caminho",
+            MessageBoxButton.OK,
+            MessageBoxImage.Information);
+
+        return false;
+    }
+
+    private void CopyFilePath()
+    {
+        if (!TryEnsureSavedFilePath())
+        {
+            return;
+        }
+
+        Clipboard.SetText(_currentFilePath!);
+    }
+
+    private void OpenContainingFolder()
+    {
+        if (!TryEnsureSavedFilePath())
+        {
+            return;
+        }
+
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = "explorer.exe",
+            Arguments = $"/select,\"{_currentFilePath}\"",
+            UseShellExecute = true
+        });
+    }
+
     private void ShowFindReplace(bool replaceMode)
     {
         _findReplaceWindow?.Close();
@@ -524,6 +566,8 @@ public partial class MainWindow : Window
     private async void SaveFile_Click(object sender, RoutedEventArgs e) => await SaveCurrentFileAsync();
     private void SaveFileAs_Click(object sender, RoutedEventArgs e) => SaveFileAs();
     private void Print_Click(object sender, RoutedEventArgs e) => PrintDocument();
+    private void CopyFilePath_Click(object sender, RoutedEventArgs e) => CopyFilePath();
+    private void OpenContainingFolder_Click(object sender, RoutedEventArgs e) => OpenContainingFolder();
     private void Exit_Click(object sender, RoutedEventArgs e) => Close();
     private void Undo_Click(object sender, RoutedEventArgs e) => EditorTextBox.Undo();
     private void Redo_Click(object sender, RoutedEventArgs e) => EditorTextBox.Redo();
