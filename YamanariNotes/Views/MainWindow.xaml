@@ -38,6 +38,8 @@
                 <Separator />
                 <MenuItem Header="Converter selecao em _maiusculas" Click="UppercaseSelection_Click" />
                 <MenuItem Header="Converter selecao em mi_nusculas" Click="LowercaseSelection_Click" />
+                <MenuItem Header="_Duplicar linha" InputGestureText="Ctrl+D" Click="DuplicateLine_Click" />
+                <MenuItem Header="Remover espacos no _fim das linhas" Click="TrimTrailingWhitespace_Click" />
                 <Separator />
                 <MenuItem Header="Inserir _data e hora" InputGestureText="F5" Click="InsertDateTime_Click" />
                 <Separator />

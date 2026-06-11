@@ -81,6 +81,7 @@ public partial class MainWindow : Window
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ShowFindReplace(false)), new KeyGesture(Key.F, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => GoToLine()), new KeyGesture(Key.G, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ShowFindReplace(true)), new KeyGesture(Key.H, ModifierKeys.Control)));
+        InputBindings.Add(new KeyBinding(new RelayCommand(_ => DuplicateCurrentLine()), new KeyGesture(Key.D, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => InsertDateTime()), new KeyGesture(Key.F5)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ResetZoom()), new KeyGesture(Key.D0, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ZoomIn()), new KeyGesture(Key.Add, ModifierKeys.Control)));
@@ -504,6 +505,45 @@ public partial class MainWindow : Window
         EditorTextBox.Focus();
     }
 
+    private void DuplicateCurrentLine()
+    {
+        if (EditorTextBox.IsReadOnly)
+        {
+            return;
+        }
+
+        var lineIndex = EditorTextBox.GetLineIndexFromCharacterIndex(EditorTextBox.CaretIndex);
+        var lineStart = EditorTextBox.GetCharacterIndexFromLineIndex(lineIndex);
+        var lineLength = EditorTextBox.GetLineLength(lineIndex);
+        var lineText = EditorTextBox.Text.Substring(lineStart, lineLength);
+
+        EditorTextBox.CaretIndex = lineStart + lineLength;
+        EditorTextBox.SelectedText = lineText.EndsWith(Environment.NewLine, StringComparison.Ordinal)
+            ? lineText
+            : Environment.NewLine + lineText;
+
+        EditorTextBox.Focus();
+    }
+
+    private void TrimTrailingWhitespace()
+    {
+        if (EditorTextBox.IsReadOnly)
+        {
+            return;
+        }
+
+        var caretIndex = EditorTextBox.CaretIndex;
+        var lines = EditorTextBox.Text
+            .Replace("\r\n", "\n")
+            .Split('\n')
+            .Select(line => line.TrimEnd())
+            .ToArray();
+
+        EditorTextBox.Text = string.Join(Environment.NewLine, lines);
+        EditorTextBox.CaretIndex = Math.Min(caretIndex, EditorTextBox.Text.Length);
+        EditorTextBox.Focus();
+    }
+
     private void GoToLine()
     {
         var currentLine = EditorTextBox.GetLineIndexFromCharacterIndex(EditorTextBox.CaretIndex) + 1;
@@ -601,6 +641,8 @@ public partial class MainWindow : Window
     private void SelectAll_Click(object sender, RoutedEventArgs e) => EditorTextBox.SelectAll();
     private void UppercaseSelection_Click(object sender, RoutedEventArgs e) => TransformSelection(text => text.ToUpper());
     private void LowercaseSelection_Click(object sender, RoutedEventArgs e) => TransformSelection(text => text.ToLower());
+    private void DuplicateLine_Click(object sender, RoutedEventArgs e) => DuplicateCurrentLine();
+    private void TrimTrailingWhitespace_Click(object sender, RoutedEventArgs e) => TrimTrailingWhitespace();
     private void InsertDateTime_Click(object sender, RoutedEventArgs e) => InsertDateTime();
     private void Find_Click(object sender, RoutedEventArgs e) => ShowFindReplace(false);
     private void Replace_Click(object sender, RoutedEventArgs e) => ShowFindReplace(true);
