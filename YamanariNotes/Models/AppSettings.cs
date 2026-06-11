@@ -8,6 +8,7 @@ public sealed class AppSettings
     public bool WordWrap { get; set; } = true;
     public bool ShowStatusBar { get; set; } = true;
     public bool AutoSave { get; set; }
+    public bool IsReadOnly { get; set; }
     public double Zoom { get; set; } = 1;
     public double WindowWidth { get; set; } = 1080;
     public double WindowHeight { get; set; } = 720;

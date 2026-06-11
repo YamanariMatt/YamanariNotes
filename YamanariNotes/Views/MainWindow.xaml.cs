@@ -94,6 +94,8 @@ public partial class MainWindow : Window
         EditorTextBox.TextWrapping = _settings.WordWrap ? TextWrapping.Wrap : TextWrapping.NoWrap;
         WordWrapMenuItem.IsChecked = _settings.WordWrap;
         AutoSaveMenuItem.IsChecked = _settings.AutoSave;
+        ReadOnlyMenuItem.IsChecked = _settings.IsReadOnly;
+        EditorTextBox.IsReadOnly = _settings.IsReadOnly;
         StatusBarMenuItem.IsChecked = _settings.ShowStatusBar;
         EditorStatusBar.Visibility = _settings.ShowStatusBar ? Visibility.Visible : Visibility.Collapsed;
         _themeService.Apply(this, EditorTextBox, EditorStatusBar, _settings.Theme);
@@ -131,6 +133,7 @@ public partial class MainWindow : Window
         _settings.FontSize = Math.Round(EditorTextBox.FontSize / _settings.Zoom, 2);
         _settings.WordWrap = WordWrapMenuItem.IsChecked == true;
         _settings.ShowStatusBar = StatusBarMenuItem.IsChecked == true;
+        _settings.IsReadOnly = ReadOnlyMenuItem.IsChecked == true;
 
         if (WindowState == WindowState.Normal)
         {
@@ -209,7 +212,9 @@ public partial class MainWindow : Window
         SelectionStatusText.Text = EditorTextBox.SelectionLength > 0
             ? $"Selecionado: {EditorTextBox.SelectionLength}"
             : "Selecionado: 0";
-        FileStateStatusText.Text = _hasUnsavedChanges ? "Nao salvo" : "Salvo";
+        FileStateStatusText.Text = _settings.IsReadOnly
+            ? _hasUnsavedChanges ? "Somente leitura / nao salvo" : "Somente leitura"
+            : _hasUnsavedChanges ? "Nao salvo" : "Salvo";
         ZoomStatusText.Text = $"Zoom: {_settings.Zoom:P0}";
         FilePathStatusText.Text = string.IsNullOrWhiteSpace(_currentFilePath)
             ? "Arquivo: sem caminho"
@@ -476,6 +481,11 @@ public partial class MainWindow : Window
 
     private void InsertDateTime()
     {
+        if (EditorTextBox.IsReadOnly)
+        {
+            return;
+        }
+
         EditorTextBox.SelectedText = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
         EditorTextBox.Focus();
     }
@@ -610,6 +620,14 @@ public partial class MainWindow : Window
     {
         _settings.ShowStatusBar = StatusBarMenuItem.IsChecked == true;
         EditorStatusBar.Visibility = _settings.ShowStatusBar ? Visibility.Visible : Visibility.Collapsed;
+        await SaveSettingsAsync();
+    }
+
+    private async void ReadOnly_Click(object sender, RoutedEventArgs e)
+    {
+        _settings.IsReadOnly = ReadOnlyMenuItem.IsChecked == true;
+        EditorTextBox.IsReadOnly = _settings.IsReadOnly;
+        UpdateStatus();
         await SaveSettingsAsync();
     }
 
