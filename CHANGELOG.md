@@ -31,3 +31,7 @@ Todas as mudancas relevantes deste projeto serao documentadas aqui.
 - Impressao de documentos pelo menu Arquivo ou Ctrl+P.
 - Barra de status com selecao atual e caminho do arquivo.
 - Dialog para ir diretamente para uma linha com Ctrl+G.
+- Persistencia do tamanho, posicao e estado maximizado da janela.
+- Acoes para copiar caminho e abrir pasta do arquivo atual.
+- Modo somente leitura persistente.
+- Conversao da selecao para maiusculas ou minusculas.

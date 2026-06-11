@@ -20,7 +20,10 @@ Construir um editor de texto simples de usar, mas completo o bastante para mostr
 - Criar, abrir e salvar arquivos `.txt` e `.md`
 - Salvar como
 - Confirmacao ao sair com alteracoes nao salvas
+- Copiar caminho do arquivo atual
+- Abrir a pasta do arquivo atual
 - Recortar, copiar, colar, desfazer, refazer e selecionar tudo
+- Converter selecao em maiusculas ou minusculas
 - Localizar e substituir texto
 - Inserir data e hora no cursor
 - Ir diretamente para uma linha
@@ -36,6 +39,8 @@ Construir um editor de texto simples de usar, mas completo o bastante para mostr
 - Salvamento automatico opcional
 - Lista de arquivos recentes
 - Limpeza da lista de arquivos recentes
+- Modo somente leitura
+- Tamanho, posicao e estado da janela persistidos
 - Atalhos de teclado
 - Tela Sobre com autor e tecnologias
 - Preferencias salvas em JSON local
