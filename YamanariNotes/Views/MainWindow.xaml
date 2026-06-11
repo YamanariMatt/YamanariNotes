@@ -36,6 +36,9 @@
                 <Separator />
                 <MenuItem x:Name="ReadOnlyMenuItem" Header="Modo _somente leitura" IsCheckable="True" Click="ReadOnly_Click" />
                 <Separator />
+                <MenuItem Header="Converter selecao em _maiusculas" Click="UppercaseSelection_Click" />
+                <MenuItem Header="Converter selecao em mi_nusculas" Click="LowercaseSelection_Click" />
+                <Separator />
                 <MenuItem Header="Inserir _data e hora" InputGestureText="F5" Click="InsertDateTime_Click" />
                 <Separator />
                 <MenuItem Header="_Localizar..." InputGestureText="Ctrl+F" Click="Find_Click" />

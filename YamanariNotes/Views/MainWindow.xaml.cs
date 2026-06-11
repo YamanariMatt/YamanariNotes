@@ -490,6 +490,20 @@ public partial class MainWindow : Window
         EditorTextBox.Focus();
     }
 
+    private void TransformSelection(Func<string, string> transform)
+    {
+        if (EditorTextBox.IsReadOnly || EditorTextBox.SelectionLength == 0)
+        {
+            return;
+        }
+
+        var selectionStart = EditorTextBox.SelectionStart;
+        var transformedText = transform(EditorTextBox.SelectedText);
+        EditorTextBox.SelectedText = transformedText;
+        EditorTextBox.Select(selectionStart, transformedText.Length);
+        EditorTextBox.Focus();
+    }
+
     private void GoToLine()
     {
         var currentLine = EditorTextBox.GetLineIndexFromCharacterIndex(EditorTextBox.CaretIndex) + 1;
@@ -585,6 +599,8 @@ public partial class MainWindow : Window
     private void Copy_Click(object sender, RoutedEventArgs e) => EditorTextBox.Copy();
     private void Paste_Click(object sender, RoutedEventArgs e) => EditorTextBox.Paste();
     private void SelectAll_Click(object sender, RoutedEventArgs e) => EditorTextBox.SelectAll();
+    private void UppercaseSelection_Click(object sender, RoutedEventArgs e) => TransformSelection(text => text.ToUpper());
+    private void LowercaseSelection_Click(object sender, RoutedEventArgs e) => TransformSelection(text => text.ToLower());
     private void InsertDateTime_Click(object sender, RoutedEventArgs e) => InsertDateTime();
     private void Find_Click(object sender, RoutedEventArgs e) => ShowFindReplace(false);
     private void Replace_Click(object sender, RoutedEventArgs e) => ShowFindReplace(true);
