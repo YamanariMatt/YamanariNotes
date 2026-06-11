@@ -43,6 +43,7 @@ public partial class MainWindow : Window
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
         _settings = await _settingsService.LoadAsync();
+        ApplyWindowSettings();
         ApplySettings();
         UpdateRecentFilesMenu();
         UpdateStatus();
@@ -102,12 +103,43 @@ public partial class MainWindow : Window
         }
     }
 
+    private void ApplyWindowSettings()
+    {
+        Width = _settings.WindowWidth;
+        Height = _settings.WindowHeight;
+
+        if (_settings.WindowLeft.HasValue)
+        {
+            Left = _settings.WindowLeft.Value;
+        }
+
+        if (_settings.WindowTop.HasValue)
+        {
+            Top = _settings.WindowTop.Value;
+        }
+
+        if (_settings.IsWindowMaximized)
+        {
+            WindowState = WindowState.Maximized;
+        }
+    }
+
     private void CaptureSettings()
     {
         _settings.FontFamily = EditorTextBox.FontFamily.Source;
         _settings.FontSize = Math.Round(EditorTextBox.FontSize / _settings.Zoom, 2);
         _settings.WordWrap = WordWrapMenuItem.IsChecked == true;
         _settings.ShowStatusBar = StatusBarMenuItem.IsChecked == true;
+
+        if (WindowState == WindowState.Normal)
+        {
+            _settings.WindowWidth = Width;
+            _settings.WindowHeight = Height;
+            _settings.WindowLeft = Left;
+            _settings.WindowTop = Top;
+        }
+
+        _settings.IsWindowMaximized = WindowState == WindowState.Maximized;
     }
 
     private async Task SaveSettingsAsync()

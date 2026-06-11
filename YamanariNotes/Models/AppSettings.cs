@@ -9,5 +9,10 @@ public sealed class AppSettings
     public bool ShowStatusBar { get; set; } = true;
     public bool AutoSave { get; set; }
     public double Zoom { get; set; } = 1;
+    public double WindowWidth { get; set; } = 1080;
+    public double WindowHeight { get; set; } = 720;
+    public double? WindowLeft { get; set; }
+    public double? WindowTop { get; set; }
+    public bool IsWindowMaximized { get; set; }
     public List<string> RecentFiles { get; set; } = [];
 }

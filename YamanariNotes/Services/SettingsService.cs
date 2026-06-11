@@ -54,6 +54,8 @@ public sealed class SettingsService
         settings.FontFamily = string.IsNullOrWhiteSpace(settings.FontFamily) ? "Consolas" : settings.FontFamily;
         settings.FontSize = Math.Clamp(settings.FontSize, 8, 48);
         settings.Zoom = Math.Clamp(settings.Zoom, 0.5, 3);
+        settings.WindowWidth = Math.Clamp(settings.WindowWidth, 720, 3840);
+        settings.WindowHeight = Math.Clamp(settings.WindowHeight, 480, 2160);
         settings.RecentFiles = settings.RecentFiles
             .Where(path => !string.IsNullOrWhiteSpace(path))
             .Distinct(StringComparer.OrdinalIgnoreCase)
