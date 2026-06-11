@@ -27,6 +27,7 @@ public partial class MainWindow : Window
     private string? _currentFilePath;
     private bool _hasUnsavedChanges;
     private bool _isLoading;
+    private bool _isClosingConfirmed;
     private FindReplaceWindow? _findReplaceWindow;
 
     public MainWindow()
@@ -49,21 +50,29 @@ public partial class MainWindow : Window
 
     private async void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
     {
-        if (!ConfirmDiscardChanges())
+        if (_isClosingConfirmed)
         {
-            e.Cancel = true;
+            CaptureSettings();
+            await _settingsService.SaveAsync(_settings);
             return;
         }
 
-        CaptureSettings();
-        await _settingsService.SaveAsync(_settings);
+        e.Cancel = true;
+
+        if (await ConfirmContinueWithUnsavedChangesAsync())
+        {
+            _isClosingConfirmed = true;
+            CaptureSettings();
+            await _settingsService.SaveAsync(_settings);
+            Close();
+        }
     }
 
     private void ConfigureShortcuts()
     {
-        InputBindings.Add(new KeyBinding(new RelayCommand(_ => NewFile()), new KeyGesture(Key.N, ModifierKeys.Control)));
+        InputBindings.Add(new KeyBinding(new RelayCommand(_ => _ = NewFileAsync()), new KeyGesture(Key.N, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => OpenFile()), new KeyGesture(Key.O, ModifierKeys.Control)));
-        InputBindings.Add(new KeyBinding(new RelayCommand(_ => SaveFile()), new KeyGesture(Key.S, ModifierKeys.Control)));
+        InputBindings.Add(new KeyBinding(new RelayCommand(_ => _ = SaveCurrentFileAsync()), new KeyGesture(Key.S, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => SaveFileAs()), new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ShowFindReplace(false)), new KeyGesture(Key.F, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ShowFindReplace(true)), new KeyGesture(Key.H, ModifierKeys.Control)));
@@ -103,7 +112,7 @@ public partial class MainWindow : Window
         await _settingsService.SaveAsync(_settings);
     }
 
-    private bool ConfirmDiscardChanges()
+    private async Task<bool> ConfirmContinueWithUnsavedChangesAsync()
     {
         if (!_hasUnsavedChanges)
         {
@@ -111,12 +120,18 @@ public partial class MainWindow : Window
         }
 
         var result = MessageBox.Show(
-            "Existem alteracoes nao salvas. Deseja descarta-las?",
+            "Existem alteracoes nao salvas. Deseja salvar antes de continuar?",
             "Alteracoes nao salvas",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Warning);
+            MessageBoxButton.YesNoCancel,
+            MessageBoxImage.Warning,
+            MessageBoxResult.Yes);
 
-        return result == MessageBoxResult.Yes;
+        return result switch
+        {
+            MessageBoxResult.Yes => await SaveCurrentFileAsync(),
+            MessageBoxResult.No => true,
+            _ => false
+        };
     }
 
     private void MarkSaved(string? path = null)
@@ -185,9 +200,9 @@ public partial class MainWindow : Window
         UpdateRecentFilesMenu();
     }
 
-    private void NewFile()
+    private async Task NewFileAsync()
     {
-        if (!ConfirmDiscardChanges())
+        if (!await ConfirmContinueWithUnsavedChangesAsync())
         {
             return;
         }
@@ -201,7 +216,7 @@ public partial class MainWindow : Window
 
     private async void OpenFile()
     {
-        if (!ConfirmDiscardChanges())
+        if (!await ConfirmContinueWithUnsavedChangesAsync())
         {
             return;
         }
@@ -231,18 +246,17 @@ public partial class MainWindow : Window
         }
     }
 
-    private async void SaveFile()
+    private async Task<bool> SaveCurrentFileAsync()
     {
         if (string.IsNullOrWhiteSpace(_currentFilePath))
         {
-            await SaveFileAsAsync();
-            return;
+            return await SaveFileAsAsync();
         }
 
-        await SaveFileAsync(_currentFilePath);
+        return await SaveFileAsync(_currentFilePath);
     }
 
-    private async Task SaveFileAsync(string path)
+    private async Task<bool> SaveFileAsync(string path)
     {
         try
         {
@@ -250,10 +264,12 @@ public partial class MainWindow : Window
             MarkSaved(path);
             AddRecentFile(path);
             await SaveSettingsAsync();
+            return true;
         }
         catch (Exception ex)
         {
             MessageBox.Show($"Nao foi possivel salvar o arquivo.\n\n{ex.Message}", "Erro ao salvar", MessageBoxButton.OK, MessageBoxImage.Error);
+            return false;
         }
     }
 
@@ -262,7 +278,7 @@ public partial class MainWindow : Window
         await SaveFileAsAsync();
     }
 
-    private async Task SaveFileAsAsync()
+    private async Task<bool> SaveFileAsAsync()
     {
         var dialog = new SaveFileDialog
         {
@@ -273,8 +289,10 @@ public partial class MainWindow : Window
 
         if (dialog.ShowDialog(this) == true)
         {
-            await SaveFileAsync(dialog.FileName);
+            return await SaveFileAsync(dialog.FileName);
         }
+
+        return false;
     }
 
     private void ShowFindReplace(bool replaceMode)
@@ -403,9 +421,9 @@ public partial class MainWindow : Window
         }
     }
 
-    private void NewFile_Click(object sender, RoutedEventArgs e) => NewFile();
+    private async void NewFile_Click(object sender, RoutedEventArgs e) => await NewFileAsync();
     private void OpenFile_Click(object sender, RoutedEventArgs e) => OpenFile();
-    private void SaveFile_Click(object sender, RoutedEventArgs e) => SaveFile();
+    private async void SaveFile_Click(object sender, RoutedEventArgs e) => await SaveCurrentFileAsync();
     private void SaveFileAs_Click(object sender, RoutedEventArgs e) => SaveFileAs();
     private void Exit_Click(object sender, RoutedEventArgs e) => Close();
     private void Undo_Click(object sender, RoutedEventArgs e) => EditorTextBox.Undo();
