@@ -21,6 +21,7 @@ public partial class MainWindow : Window
     private readonly RecentFilesService _recentFilesService = new();
     private readonly TextStatisticsService _textStatisticsService = new();
     private readonly ThemeService _themeService = new();
+    private readonly PrintService _printService = new();
     private readonly DispatcherTimer _autoSaveTimer = new() { Interval = TimeSpan.FromSeconds(30) };
 
     private AppSettings _settings = new();
@@ -74,6 +75,7 @@ public partial class MainWindow : Window
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => OpenFile()), new KeyGesture(Key.O, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => _ = SaveCurrentFileAsync()), new KeyGesture(Key.S, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => SaveFileAs()), new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift)));
+        InputBindings.Add(new KeyBinding(new RelayCommand(_ => PrintDocument()), new KeyGesture(Key.P, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ShowFindReplace(false)), new KeyGesture(Key.F, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ShowFindReplace(true)), new KeyGesture(Key.H, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => InsertDateTime()), new KeyGesture(Key.F5)));
@@ -308,6 +310,15 @@ public partial class MainWindow : Window
         return false;
     }
 
+    private void PrintDocument()
+    {
+        var documentName = string.IsNullOrWhiteSpace(_currentFilePath)
+            ? "YamanariNotes"
+            : Path.GetFileName(_currentFilePath);
+
+        _printService.PrintText(EditorTextBox.Text, documentName, EditorTextBox.FontFamily, EditorTextBox.FontSize);
+    }
+
     private void ShowFindReplace(bool replaceMode)
     {
         _findReplaceWindow?.Close();
@@ -444,6 +455,7 @@ public partial class MainWindow : Window
     private void OpenFile_Click(object sender, RoutedEventArgs e) => OpenFile();
     private async void SaveFile_Click(object sender, RoutedEventArgs e) => await SaveCurrentFileAsync();
     private void SaveFileAs_Click(object sender, RoutedEventArgs e) => SaveFileAs();
+    private void Print_Click(object sender, RoutedEventArgs e) => PrintDocument();
     private void Exit_Click(object sender, RoutedEventArgs e) => Close();
     private void Undo_Click(object sender, RoutedEventArgs e) => EditorTextBox.Undo();
     private void Redo_Click(object sender, RoutedEventArgs e) => EditorTextBox.Redo();
