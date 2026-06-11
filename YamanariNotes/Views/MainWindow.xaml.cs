@@ -76,6 +76,7 @@ public partial class MainWindow : Window
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => SaveFileAs()), new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ShowFindReplace(false)), new KeyGesture(Key.F, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ShowFindReplace(true)), new KeyGesture(Key.H, ModifierKeys.Control)));
+        InputBindings.Add(new KeyBinding(new RelayCommand(_ => InsertDateTime()), new KeyGesture(Key.F5)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ResetZoom()), new KeyGesture(Key.D0, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ZoomIn()), new KeyGesture(Key.Add, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ZoomOut()), new KeyGesture(Key.Subtract, ModifierKeys.Control)));
@@ -381,6 +382,12 @@ public partial class MainWindow : Window
         EditorTextBox.Text = source;
     }
 
+    private void InsertDateTime()
+    {
+        EditorTextBox.SelectedText = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+        EditorTextBox.Focus();
+    }
+
     private void ChangeFont()
     {
         using var dialog = new Forms.FontDialog
@@ -444,6 +451,7 @@ public partial class MainWindow : Window
     private void Copy_Click(object sender, RoutedEventArgs e) => EditorTextBox.Copy();
     private void Paste_Click(object sender, RoutedEventArgs e) => EditorTextBox.Paste();
     private void SelectAll_Click(object sender, RoutedEventArgs e) => EditorTextBox.SelectAll();
+    private void InsertDateTime_Click(object sender, RoutedEventArgs e) => InsertDateTime();
     private void Find_Click(object sender, RoutedEventArgs e) => ShowFindReplace(false);
     private void Replace_Click(object sender, RoutedEventArgs e) => ShowFindReplace(true);
     private void IncreaseFontSize_Click(object sender, RoutedEventArgs e) => ChangeFontSize(1);

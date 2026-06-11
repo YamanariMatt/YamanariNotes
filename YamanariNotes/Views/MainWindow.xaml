@@ -30,6 +30,8 @@
                 <MenuItem Header="Co_lar" InputGestureText="Ctrl+V" Click="Paste_Click" />
                 <MenuItem Header="Selecionar _tudo" InputGestureText="Ctrl+A" Click="SelectAll_Click" />
                 <Separator />
+                <MenuItem Header="Inserir _data e hora" InputGestureText="F5" Click="InsertDateTime_Click" />
+                <Separator />
                 <MenuItem Header="_Localizar..." InputGestureText="Ctrl+F" Click="Find_Click" />
                 <MenuItem Header="_Substituir..." InputGestureText="Ctrl+H" Click="Replace_Click" />
             </MenuItem>
