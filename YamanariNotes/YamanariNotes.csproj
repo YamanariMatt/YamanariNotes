@@ -6,5 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>YamanariNotes</AssemblyName>
+    <RootNamespace>YamanariNotes</RootNamespace>
+    <Version>0.1.0</Version>
+    <Authors>Matheus Victor Moreira Yamanari</Authors>
+    <Company>Matheus Victor Moreira Yamanari</Company>
+    <Description>Bloco de notas moderno em C# WPF para portfolio.</Description>
+    <Copyright>Copyright (c) 2026 Matheus Victor Moreira Yamanari</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/YamanariMatt/YamanariNotes</RepositoryUrl>
   </PropertyGroup>
 </Project>
