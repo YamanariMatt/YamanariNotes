@@ -36,6 +36,7 @@
                 <Separator />
                 <MenuItem Header="_Localizar..." InputGestureText="Ctrl+F" Click="Find_Click" />
                 <MenuItem Header="_Substituir..." InputGestureText="Ctrl+H" Click="Replace_Click" />
+                <MenuItem Header="_Ir para linha..." InputGestureText="Ctrl+G" Click="GoToLine_Click" />
             </MenuItem>
             <MenuItem Header="_Formatar">
                 <MenuItem Header="Alterar _fonte..." Click="ChangeFont_Click" />

@@ -77,6 +77,7 @@ public partial class MainWindow : Window
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => SaveFileAs()), new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => PrintDocument()), new KeyGesture(Key.P, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ShowFindReplace(false)), new KeyGesture(Key.F, ModifierKeys.Control)));
+        InputBindings.Add(new KeyBinding(new RelayCommand(_ => GoToLine()), new KeyGesture(Key.G, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ShowFindReplace(true)), new KeyGesture(Key.H, ModifierKeys.Control)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => InsertDateTime()), new KeyGesture(Key.F5)));
         InputBindings.Add(new KeyBinding(new RelayCommand(_ => ResetZoom()), new KeyGesture(Key.D0, ModifierKeys.Control)));
@@ -405,6 +406,35 @@ public partial class MainWindow : Window
         EditorTextBox.Focus();
     }
 
+    private void GoToLine()
+    {
+        var currentLine = EditorTextBox.GetLineIndexFromCharacterIndex(EditorTextBox.CaretIndex) + 1;
+        var dialog = new InputDialog("Ir para linha", "Digite o numero da linha:", currentLine.ToString())
+        {
+            Owner = this
+        };
+
+        if (dialog.ShowDialog() != true)
+        {
+            return;
+        }
+
+        if (!int.TryParse(dialog.Value, out var requestedLine))
+        {
+            MessageBox.Show("Digite um numero de linha valido.", "Ir para linha", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+
+        var lineCount = Math.Max(1, EditorTextBox.LineCount);
+        var targetLine = Math.Clamp(requestedLine, 1, lineCount);
+        var characterIndex = EditorTextBox.GetCharacterIndexFromLineIndex(targetLine - 1);
+
+        EditorTextBox.Focus();
+        EditorTextBox.CaretIndex = characterIndex;
+        EditorTextBox.ScrollToLine(targetLine - 1);
+        UpdateStatus();
+    }
+
     private void ChangeFont()
     {
         using var dialog = new Forms.FontDialog
@@ -472,6 +502,7 @@ public partial class MainWindow : Window
     private void InsertDateTime_Click(object sender, RoutedEventArgs e) => InsertDateTime();
     private void Find_Click(object sender, RoutedEventArgs e) => ShowFindReplace(false);
     private void Replace_Click(object sender, RoutedEventArgs e) => ShowFindReplace(true);
+    private void GoToLine_Click(object sender, RoutedEventArgs e) => GoToLine();
     private void IncreaseFontSize_Click(object sender, RoutedEventArgs e) => ChangeFontSize(1);
     private void DecreaseFontSize_Click(object sender, RoutedEventArgs e) => ChangeFontSize(-1);
     private void ZoomIn_Click(object sender, RoutedEventArgs e) => ZoomIn();
