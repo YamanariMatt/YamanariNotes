@@ -15,6 +15,8 @@
                 <MenuItem Header="_Salvar" InputGestureText="Ctrl+S" Click="SaveFile_Click" />
                 <MenuItem Header="Salvar _como..." InputGestureText="Ctrl+Shift+S" Click="SaveFileAs_Click" />
                 <Separator />
+                <MenuItem x:Name="AutoSaveMenuItem" Header="Salvamento _automatico" IsCheckable="True" Click="AutoSave_Click" />
+                <Separator />
                 <MenuItem x:Name="RecentFilesMenuItem" Header="Arquivos _recentes" />
                 <Separator />
                 <MenuItem Header="Sai_r" Click="Exit_Click" />
