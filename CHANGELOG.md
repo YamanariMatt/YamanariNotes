@@ -21,3 +21,10 @@ Todas as mudancas relevantes deste projeto serao documentadas aqui.
 - Salvamento automatico opcional.
 - Tela Sobre.
 - README, LICENSE e .gitignore.
+
+### Improved
+
+- Confirmacao de alteracoes nao salvas com opcoes para salvar, descartar ou cancelar.
+- Carregamento de configuracoes com valores padrao seguros.
+- Acao para limpar arquivos recentes.
+- Insercao de data e hora pelo menu Editar ou tecla F5.

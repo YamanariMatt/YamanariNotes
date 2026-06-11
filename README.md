@@ -22,6 +22,7 @@ Construir um editor de texto simples de usar, mas completo o bastante para mostr
 - Confirmacao ao sair com alteracoes nao salvas
 - Recortar, copiar, colar, desfazer, refazer e selecionar tudo
 - Localizar e substituir texto
+- Inserir data e hora no cursor
 - Barra de status com caracteres, palavras, linha, coluna, zoom e estado do arquivo
 - Tema claro e tema escuro
 - Fonte configuravel
@@ -31,6 +32,7 @@ Construir um editor de texto simples de usar, mas completo o bastante para mostr
 - Exibir ou ocultar barra de status
 - Salvamento automatico opcional
 - Lista de arquivos recentes
+- Limpeza da lista de arquivos recentes
 - Atalhos de teclado
 - Tela Sobre com autor e tecnologias
 - Preferencias salvas em JSON local
@@ -44,6 +46,7 @@ Construir um editor de texto simples de usar, mas completo o bastante para mostr
 - `Ctrl+F`: localizar
 - `Ctrl+H`: substituir
 - `Ctrl+0`: restaurar zoom
+- `F5`: inserir data e hora
 
 ## Capturas de tela
 
