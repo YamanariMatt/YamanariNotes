@@ -28,3 +28,6 @@ Todas as mudancas relevantes deste projeto serao documentadas aqui.
 - Carregamento de configuracoes com valores padrao seguros.
 - Acao para limpar arquivos recentes.
 - Insercao de data e hora pelo menu Editar ou tecla F5.
+- Impressao de documentos pelo menu Arquivo ou Ctrl+P.
+- Barra de status com selecao atual e caminho do arquivo.
+- Dialog para ir diretamente para uma linha com Ctrl+G.

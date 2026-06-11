@@ -23,7 +23,10 @@ Construir um editor de texto simples de usar, mas completo o bastante para mostr
 - Recortar, copiar, colar, desfazer, refazer e selecionar tudo
 - Localizar e substituir texto
 - Inserir data e hora no cursor
+- Ir diretamente para uma linha
+- Imprimir documento
 - Barra de status com caracteres, palavras, linha, coluna, zoom e estado do arquivo
+- Barra de status com selecao atual e caminho do arquivo
 - Tema claro e tema escuro
 - Fonte configuravel
 - Tamanho de fonte configuravel
@@ -45,6 +48,8 @@ Construir um editor de texto simples de usar, mas completo o bastante para mostr
 - `Ctrl+Shift+S`: salvar como
 - `Ctrl+F`: localizar
 - `Ctrl+H`: substituir
+- `Ctrl+G`: ir para linha
+- `Ctrl+P`: imprimir
 - `Ctrl+0`: restaurar zoom
 - `F5`: inserir data e hora
 
