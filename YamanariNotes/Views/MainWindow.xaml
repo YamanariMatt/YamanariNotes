@@ -1,0 +1,82 @@
+<Window x:Class="YamanariNotes.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="YamanariNotes"
+        Height="720"
+        Width="1080"
+        MinHeight="480"
+        MinWidth="720">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Arquivo">
+                <MenuItem Header="_Novo" InputGestureText="Ctrl+N" Click="NewFile_Click" />
+                <MenuItem Header="_Abrir..." InputGestureText="Ctrl+O" Click="OpenFile_Click" />
+                <Separator />
+                <MenuItem Header="_Salvar" InputGestureText="Ctrl+S" Click="SaveFile_Click" />
+                <MenuItem Header="Salvar _como..." InputGestureText="Ctrl+Shift+S" Click="SaveFileAs_Click" />
+                <Separator />
+                <MenuItem x:Name="RecentFilesMenuItem" Header="Arquivos _recentes" />
+                <Separator />
+                <MenuItem Header="Sai_r" Click="Exit_Click" />
+            </MenuItem>
+            <MenuItem Header="_Editar">
+                <MenuItem Header="_Desfazer" InputGestureText="Ctrl+Z" Click="Undo_Click" />
+                <MenuItem Header="_Refazer" InputGestureText="Ctrl+Y" Click="Redo_Click" />
+                <Separator />
+                <MenuItem Header="Recor_tar" InputGestureText="Ctrl+X" Click="Cut_Click" />
+                <MenuItem Header="_Copiar" InputGestureText="Ctrl+C" Click="Copy_Click" />
+                <MenuItem Header="Co_lar" InputGestureText="Ctrl+V" Click="Paste_Click" />
+                <MenuItem Header="Selecionar _tudo" InputGestureText="Ctrl+A" Click="SelectAll_Click" />
+                <Separator />
+                <MenuItem Header="_Localizar..." InputGestureText="Ctrl+F" Click="Find_Click" />
+                <MenuItem Header="_Substituir..." InputGestureText="Ctrl+H" Click="Replace_Click" />
+            </MenuItem>
+            <MenuItem Header="_Formatar">
+                <MenuItem Header="Alterar _fonte..." Click="ChangeFont_Click" />
+                <MenuItem Header="Aumentar tamanho da fonte" Click="IncreaseFontSize_Click" />
+                <MenuItem Header="Diminuir tamanho da fonte" Click="DecreaseFontSize_Click" />
+                <Separator />
+                <MenuItem x:Name="WordWrapMenuItem" Header="_Quebra automatica de linha" IsCheckable="True" Click="WordWrap_Click" />
+                <Separator />
+                <MenuItem Header="Tema _claro" Click="LightTheme_Click" />
+                <MenuItem Header="Tema _escuro" Click="DarkTheme_Click" />
+            </MenuItem>
+            <MenuItem Header="_Visualizar">
+                <MenuItem Header="Aumentar _zoom" InputGestureText="Ctrl++" Click="ZoomIn_Click" />
+                <MenuItem Header="Diminuir z_oom" InputGestureText="Ctrl+-" Click="ZoomOut_Click" />
+                <MenuItem Header="Restaurar zoom _padrao" InputGestureText="Ctrl+0" Click="ResetZoom_Click" />
+                <Separator />
+                <MenuItem x:Name="StatusBarMenuItem" Header="Exibir barra de _status" IsCheckable="True" Click="ToggleStatusBar_Click" />
+            </MenuItem>
+            <MenuItem Header="A_juda">
+                <MenuItem Header="_Sobre" Click="About_Click" />
+            </MenuItem>
+        </Menu>
+
+        <StatusBar x:Name="EditorStatusBar" DockPanel.Dock="Bottom">
+            <TextBlock x:Name="CharactersStatusText" Margin="4,0" />
+            <Separator />
+            <TextBlock x:Name="WordsStatusText" Margin="4,0" />
+            <Separator />
+            <TextBlock x:Name="LineColumnStatusText" Margin="4,0" />
+            <Separator />
+            <TextBlock x:Name="FileStateStatusText" Margin="4,0" />
+            <Separator />
+            <TextBlock x:Name="ZoomStatusText" Margin="4,0" />
+        </StatusBar>
+
+        <TextBox x:Name="EditorTextBox"
+                 AcceptsReturn="True"
+                 AcceptsTab="True"
+                 BorderThickness="0"
+                 FontFamily="Consolas"
+                 FontSize="16"
+                 HorizontalScrollBarVisibility="Auto"
+                 Padding="16"
+                 TextChanged="EditorTextBox_TextChanged"
+                 VerticalScrollBarVisibility="Auto"
+                 SelectionChanged="EditorTextBox_SelectionChanged"
+                 SpellCheck.IsEnabled="True"
+                 TextWrapping="Wrap" />
+    </DockPanel>
+</Window>

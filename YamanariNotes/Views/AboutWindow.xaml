@@ -1,0 +1,19 @@
+<Window x:Class="YamanariNotes.Views.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Sobre o YamanariNotes"
+        Height="280"
+        Width="420"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="24">
+        <StackPanel>
+            <TextBlock Text="YamanariNotes" FontSize="26" FontWeight="SemiBold" />
+            <TextBlock Margin="0,10,0,0" Text="Bloco de notas moderno feito em C# e WPF." TextWrapping="Wrap" />
+            <TextBlock Margin="0,18,0,0" Text="Autor: Matheus Victor Moreira Yamanari" />
+            <TextBlock Text="E-mail: matheusvictormy@gmail.com" />
+            <TextBlock Margin="0,18,0,0" Text=".NET 8, WPF, JSON local e boas praticas de organizacao." TextWrapping="Wrap" />
+            <Button Margin="0,24,0,0" Width="90" HorizontalAlignment="Right" Content="OK" IsDefault="True" Click="Ok_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,35 @@
+<Window x:Class="YamanariNotes.Views.FindReplaceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Localizar e substituir"
+        Height="230"
+        Width="460"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="0,4,10,8" Text="Localizar" />
+        <TextBox x:Name="FindTextBox" Grid.Row="0" Grid.Column="1" Margin="0,0,0,8" />
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="0,4,10,8" Text="Substituir por" />
+        <TextBox x:Name="ReplaceTextBox" Grid.Row="1" Grid.Column="1" Margin="0,0,0,8" />
+
+        <CheckBox x:Name="MatchCaseCheckBox" Grid.Row="2" Grid.Column="1" Content="Diferenciar maiusculas/minusculas" />
+
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="0,22,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Width="90" Margin="0,0,8,0" Content="Localizar" Click="Find_Click" />
+            <Button Width="90" Margin="0,0,8,0" Content="Substituir" Click="Replace_Click" />
+            <Button Width="110" Content="Substituir tudo" Click="ReplaceAll_Click" />
+        </StackPanel>
+    </Grid>
+</Window>
