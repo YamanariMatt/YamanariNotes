@@ -1,5 +1,7 @@
 # YamanariNotes
 
+[![.NET build](https://github.com/YamanariMatt/YamanariNotes/actions/workflows/dotnet.yml/badge.svg)](https://github.com/YamanariMatt/YamanariNotes/actions/workflows/dotnet.yml)
+
 YamanariNotes e um bloco de notas moderno desenvolvido em C# com WPF e .NET 8. O projeto foi criado como portfolio principal para demonstrar organizacao de codigo, persistencia local, boas praticas de Git e uma experiencia desktop completa.
 
 ## Objetivo
