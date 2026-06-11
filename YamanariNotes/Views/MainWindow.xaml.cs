@@ -192,12 +192,24 @@ public partial class MainWindow : Window
             item.Click += async (_, _) => await OpenFileAsync(file);
             RecentFilesMenuItem.Items.Add(item);
         }
+
+        RecentFilesMenuItem.Items.Add(new Separator());
+        var clearItem = new MenuItem { Header = "Limpar lista" };
+        clearItem.Click += async (_, _) => await ClearRecentFilesAsync();
+        RecentFilesMenuItem.Items.Add(clearItem);
     }
 
     private void AddRecentFile(string path)
     {
         _settings.RecentFiles = _recentFilesService.Add(path, _settings.RecentFiles);
         UpdateRecentFilesMenu();
+    }
+
+    private async Task ClearRecentFilesAsync()
+    {
+        _settings.RecentFiles.Clear();
+        UpdateRecentFilesMenu();
+        await SaveSettingsAsync();
     }
 
     private async Task NewFileAsync()
