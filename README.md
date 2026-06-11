@@ -66,6 +66,14 @@ dotnet run --project YamanariNotes/YamanariNotes.csproj
 dotnet build YamanariNotes.sln
 ```
 
+## Repositorio GitHub
+
+```bash
+git remote add origin https://github.com/YamanariMatt/YamanariNotes.git
+git branch -M main
+git push -u origin main
+```
+
 ## Estrutura de pastas
 
 ```text
