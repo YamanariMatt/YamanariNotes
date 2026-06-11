@@ -66,9 +66,13 @@
             <Separator />
             <TextBlock x:Name="LineColumnStatusText" Margin="4,0" />
             <Separator />
+            <TextBlock x:Name="SelectionStatusText" Margin="4,0" />
+            <Separator />
             <TextBlock x:Name="FileStateStatusText" Margin="4,0" />
             <Separator />
             <TextBlock x:Name="ZoomStatusText" Margin="4,0" />
+            <Separator />
+            <TextBlock x:Name="FilePathStatusText" Margin="4,0" TextTrimming="CharacterEllipsis" />
         </StatusBar>
 
         <TextBox x:Name="EditorTextBox"

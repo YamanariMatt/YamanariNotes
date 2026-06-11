@@ -172,8 +172,14 @@ public partial class MainWindow : Window
         CharactersStatusText.Text = $"Caracteres: {stats.Characters}";
         WordsStatusText.Text = $"Palavras: {stats.Words}";
         LineColumnStatusText.Text = $"Linha {stats.Line}, Coluna {stats.Column}";
+        SelectionStatusText.Text = EditorTextBox.SelectionLength > 0
+            ? $"Selecionado: {EditorTextBox.SelectionLength}"
+            : "Selecionado: 0";
         FileStateStatusText.Text = _hasUnsavedChanges ? "Nao salvo" : "Salvo";
         ZoomStatusText.Text = $"Zoom: {_settings.Zoom:P0}";
+        FilePathStatusText.Text = string.IsNullOrWhiteSpace(_currentFilePath)
+            ? "Arquivo: sem caminho"
+            : $"Arquivo: {_currentFilePath}";
     }
 
     private void UpdateRecentFilesMenu()
