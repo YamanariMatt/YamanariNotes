@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Microsoft.Win32;
+using YamanariNotes.Helpers;
 using YamanariNotes.Models;
 using YamanariNotes.Services;
 using Forms = System.Windows.Forms;
@@ -479,12 +480,5 @@ public partial class MainWindow : Window
     private void EditorTextBox_SelectionChanged(object sender, RoutedEventArgs e)
     {
         UpdateStatus();
-    }
-
-    private sealed class RelayCommand(Action<object?> execute) : ICommand
-    {
-        public event EventHandler? CanExecuteChanged;
-        public bool CanExecute(object? parameter) => true;
-        public void Execute(object? parameter) => execute(parameter);
     }
 }
