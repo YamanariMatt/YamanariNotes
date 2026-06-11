@@ -35,3 +35,7 @@ Todas as mudancas relevantes deste projeto serao documentadas aqui.
 - Acoes para copiar caminho e abrir pasta do arquivo atual.
 - Modo somente leitura persistente.
 - Conversao da selecao para maiusculas ou minusculas.
+- Utilidades para duplicar linha e remover espacos no fim das linhas.
+- Workflow de CI para build .NET no GitHub Actions.
+- Metadados do projeto no arquivo `.csproj`.
+- Guia de contribuicao com validacao e padrao de commits.
